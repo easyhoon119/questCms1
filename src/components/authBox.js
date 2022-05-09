@@ -1,11 +1,10 @@
 import styled from "styled-components";
 import AuthBtn from "./authBtn";
 import { useForm } from "react-hook-form";
-import { useEffect, useRef, useState } from "react";
+import { useRef, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import firestore from "../services/firebase";
 import { addDoc, collection } from "firebase/firestore";
-import { async } from "@firebase/util";
 
 function AuthBox({ title }) {
     const [phoneNumber, setPhoneNumber] = useState("");
@@ -16,24 +15,19 @@ function AuthBox({ title }) {
         handleSubmit,
         formState: { errors },
         watch,
-        setValue,
     } = useForm();
     const password = useRef({});
     password.current = watch("password", "");
 
     const onCheckPhone = (e) => {
-        console.log(errors);
         setPhoneNumber(
             e.target.value.replace(/^(\d{3})(\d{4})(\d{4})$/, `$1-$2-$3`)
         );
     };
 
     const onSaveUserInfo = async (data) => {
-        console.log(data);
-        console.log(location.pathname);
         if (location.pathname === "/signUp") {
-            const docRef = await addDoc(collection(firestore, "auth"), data);
-            console.log(docRef.id);
+            await addDoc(collection(firestore, "auth"), data);
             navigate("/list");
         }
     };

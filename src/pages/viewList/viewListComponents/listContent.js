@@ -20,7 +20,6 @@ function ListContent() {
                 dummyList.push([{ id: doc.id, data: doc.data() }]);
             });
 
-            console.log(dummyList);
             setListData(dummyList);
         };
 

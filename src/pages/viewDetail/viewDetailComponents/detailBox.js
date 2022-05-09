@@ -12,8 +12,6 @@ function DetailBox({ data, objectData, detailData, setData }) {
         register,
         handleSubmit,
         formState: { errors },
-        watch,
-        setValue,
     } = useForm();
     const [modify, setModify] = useState(false);
 
@@ -22,14 +20,12 @@ function DetailBox({ data, objectData, detailData, setData }) {
     };
 
     const onCheckPhone = (e) => {
-        console.log(errors);
         setPhoneNumber(
             e.target.value.replace(/^(\d{3})(\d{4})(\d{4})$/, `$1-$2-$3`)
         );
     };
 
     const onSubmitModify = async (datas, title) => {
-        console.log(datas, title);
         const newArray = [];
         detailData.forEach((item) => {
             if (item[0] === title) {
@@ -38,8 +34,6 @@ function DetailBox({ data, objectData, detailData, setData }) {
                 newArray.push(item);
             }
         });
-        console.log({ ...objectData, [title]: datas });
-        console.log(location.pathname.split("/")[2]);
         try {
             await setDoc(
                 doc(firestore, "auth", location.pathname.split("/")[2]),
@@ -50,7 +44,6 @@ function DetailBox({ data, objectData, detailData, setData }) {
         }
 
         setData(newArray);
-        console.log("newArray : ", newArray);
     };
 
     return (

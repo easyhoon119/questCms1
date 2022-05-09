@@ -1,4 +1,4 @@
-import { collection, doc, getDoc, getDocs } from "firebase/firestore";
+import { collection, doc, getDoc } from "firebase/firestore";
 import { useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import styled from "styled-components";
@@ -17,13 +17,12 @@ function DetailContent() {
             const oneDoc = doc(docRef, location.pathname.split("/")[2]);
             const docSnap = await getDoc(oneDoc);
 
-            console.log(docSnap.data());
             setObjectData(docSnap.data());
-            console.log(Object.entries(docSnap.data()).sort());
             setDetailData(Object.entries(docSnap.data()).sort());
         };
 
         fetchFire();
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
     return (
